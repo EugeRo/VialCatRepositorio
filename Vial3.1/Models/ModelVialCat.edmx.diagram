@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6cb9e3d4d3864e98ae46f5ae1d98e5b5" Name="Diagram1">
+        <EntityTypeShape EntityType="vialcatModel.vial_afiliados" Width="1.5" PointX="2.75" PointY="0.5" />
+        <EntityTypeShape EntityType="vialcatModel.vial_estadoafiliacion" Width="1.5" PointX="0.5" PointY="3.375" />
+        <AssociationConnector Association="vialcatModel.FK_estAfiliacion_Afiliado" />
+        <EntityTypeShape EntityType="vialcatModel.vial_usuarioscomercio" Width="1.875" PointX="7" PointY="5.25" />
+        <EntityTypeShape EntityType="vialcatModel.vial_comercio" Width="1.5" PointX="4.25" PointY="3.625" />
+        <AssociationConnector Association="vialcatModel.FK_usuarioscomercio_comercio" />
+        <EntityTypeShape EntityType="vialcatModel.vial_ordencomprapresentada" Width="2.25" PointX="10.5" PointY="2.625" />
+        <AssociationConnector Association="vialcatModel.FK_comercio" />
+        <AssociationConnector Association="vialcatModel.FK_presentada_Usuario" />
+        <EntityTypeShape EntityType="vialcatModel.vial_estadoordencompra" Width="2.625" PointX="11" PointY="0.625" />
+        <EntityTypeShape EntityType="vialcatModel.vial_ordendecompra" Width="2.125" PointX="6.875" PointY="0.625" />
+        <AssociationConnector Association="vialcatModel.FK_OrdenCompra_Afiliados" />
+        <AssociationConnector Association="vialcatModel.FK_OrdenCompra_Comercio" />
+        <AssociationConnector Association="vialcatModel.FK_Orden_EstadoOrden" />
+        <AssociationConnector Association="vialcatModel.FK_ordenCompra" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

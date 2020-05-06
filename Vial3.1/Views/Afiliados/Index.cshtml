@@ -1,0 +1,81 @@
+﻿@model PagedList.IPagedList<Vial3._1.Models.vial_afiliados>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Afiliados</h2>
+
+
+<h2>@Html.ActionLink("Nuevo Afiliado", "Agregar")</h2>
+
+
+@using (@Html.BeginForm("Index", "afiliados", FormMethod.Post))
+{
+    <div class="form-control">
+        Apellido: @Html.TextBox("SearchString")
+        <input type="submit" value="Buscar" />
+    </div>
+}
+</br>
+    
+
+<table class="table">
+    <tr>
+        <th>
+            Apellido
+        </th>
+
+        <th>
+            Nombre
+        </th>
+
+        <th>
+            Documento
+        </th>
+
+        <th>
+            Domicilio
+        </th>
+
+        <th>
+            Id. Afil
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.documento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.domicilio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idAfiliados)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.idAfiliados }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idAfiliados }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.idAfiliados })
+            </td>
+        </tr>
+    }
+
+</table>
+
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

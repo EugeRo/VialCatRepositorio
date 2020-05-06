@@ -1,0 +1,104 @@
+﻿@model Vial3._1.Models.ViewModels.OrdenDeCompraVM
+@{
+    ViewBag.Title = "ModificarOc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> itemsC = (List<SelectListItem>)ViewBag.Comercio;
+
+
+    ViewBag.Title = "Modificar Orden de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Modificar</h2>
+
+
+@using (@Html.BeginForm("ModificarOc", "OrdenCompra", FormMethod.Post))
+{
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(d => d.IdOrdenDeCompra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(d => d.IdOrdenDeCompra)
+            @Html.HiddenFor(d => d.IdOrdenDeCompra)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(d => d.DatosAfiliado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(d => d.DatosAfiliado)
+            @Html.HiddenFor(d => d.DatosAfiliado)
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(d => d.FechaEmision)
+        </dt>
+
+        <dd>
+            @Html.EditorFor(d => d.FechaEmision, new { htmlAttributes = new { @class = "col-md-2" } })
+            @Html.HiddenFor(d => d.FechaEmision)
+            
+            <dd>
+                @Html.ValidationMessageFor(d => d.FechaEmision, "", new { @class = "text-danger" })
+            </dd>
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(d => d.FechaVencimiento)
+        </dt>
+
+        <dd>
+            @Html.EditorFor(d => d.FechaVencimiento, new { htmlAttributes = new { @class = "col-md-2" } })
+            @Html.HiddenFor(d => d.FechaVencimiento)
+        <dd>
+            @Html.ValidationMessageFor(d => d.FechaVencimiento, "", new { @class = "text-danger" })
+        </dd>
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(d => d.Importe)
+           
+        </dt>
+
+        <dd>
+            @Html.TextBoxFor(d => d.Importe, new { htmlAttributes = new { @class = "col-md-2" } })
+        <dd>
+            @Html.ValidationMessageFor(d => d.Importe, "", new { @class = "text-danger" })
+        </dd>
+        </dd>
+        <br />
+        <dt>
+            @Html.LabelFor(d => d.Comercio, "Comercio")
+        </dt>
+        <dd>
+            @Html.DropDownList("Comercio", ViewBag.Comercio as SelectList, "Seleccione Comercio", new { @Class = "col-md-2" })
+        <dd>
+            @Html.ValidationMessageFor(d => d.Comercio, "", new { @class = "text-danger" })
+        </dd>
+        </dd>
+        <br />
+
+    </dl>
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-6">
+            <input type="submit" value="Modificar" class="btn btn-primary btn-block" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-6">
+            @Html.ActionLink("Volver", "Index")
+        </div>
+    </div>
+    
+
+
+}
+
+

@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="vialcatModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="vial_afiliados">
+          <Key>
+            <PropertyRef Name="idAfiliados" />
+          </Key>
+          <Property Name="idAfiliados" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="documento" Type="int" Nullable="false" />
+          <Property Name="domicilio" Type="varchar" MaxLength="45" />
+          <Property Name="telefono" Type="varchar" MaxLength="45" />
+          <Property Name="estado_afiliacion" Type="int" />
+        </EntityType>
+        <EntityType Name="vial_comercio">
+          <Key>
+            <PropertyRef Name="id_comercio" />
+          </Key>
+          <Property Name="id_comercio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="razonsocial" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="domicilio" Type="varchar" MaxLength="45" />
+          <Property Name="telefono" Type="varchar" MaxLength="15" />
+          <Property Name="cuit" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vial_estadoafiliacion">
+          <Key>
+            <PropertyRef Name="idestadoafiliacion" />
+          </Key>
+          <Property Name="idestadoafiliacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estadoafiliacion" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vial_estadoordencompra">
+          <Key>
+            <PropertyRef Name="idestadoordencompra" />
+          </Key>
+          <Property Name="idestadoordencompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estadoordencompra" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vial_ordencomprapresentada">
+          <Key>
+            <PropertyRef Name="idordencomprapresentada" />
+          </Key>
+          <Property Name="idordencomprapresentada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idcomercio" Type="int" Nullable="false" />
+          <Property Name="idordendecompra" Type="int" Nullable="false" />
+          <Property Name="fechapresentacion" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="usuario" Type="int" />
+          <Property Name="ip" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="vial_ordendecompra">
+          <Key>
+            <PropertyRef Name="idOrdenDeCompra" />
+          </Key>
+          <Property Name="idOrdenDeCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Afiliado" Type="int" Nullable="false" />
+          <Property Name="importe" Type="double" Nullable="false" />
+          <Property Name="comercio" Type="int" Nullable="false" />
+          <Property Name="fecha_emision" Type="date" />
+          <Property Name="fecha_vencimiento" Type="date" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vial_usuarioscomercio">
+          <Key>
+            <PropertyRef Name="idUsuariosComercio" />
+          </Key>
+          <Property Name="idUsuariosComercio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idComercio" Type="int" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="contrasenial" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_comercio">
+          <End Role="vial_comercio" Type="Self.vial_comercio" Multiplicity="1" />
+          <End Role="vial_ordencomprapresentada" Type="Self.vial_ordencomprapresentada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_ordencomprapresentada">
+              <PropertyRef Name="idcomercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estAfiliacion_Afiliado">
+          <End Role="vial_estadoafiliacion" Type="Self.vial_estadoafiliacion" Multiplicity="0..1" />
+          <End Role="vial_afiliados" Type="Self.vial_afiliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_estadoafiliacion">
+              <PropertyRef Name="idestadoafiliacion" />
+            </Principal>
+            <Dependent Role="vial_afiliados">
+              <PropertyRef Name="estado_afiliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orden_EstadoOrden">
+          <End Role="vial_estadoordencompra" Type="Self.vial_estadoordencompra" Multiplicity="1" />
+          <End Role="vial_ordendecompra" Type="Self.vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_estadoordencompra">
+              <PropertyRef Name="idestadoordencompra" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordenCompra">
+          <End Role="vial_ordendecompra" Type="Self.vial_ordendecompra" Multiplicity="1" />
+          <End Role="vial_ordencomprapresentada" Type="Self.vial_ordencomprapresentada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_ordendecompra">
+              <PropertyRef Name="idOrdenDeCompra" />
+            </Principal>
+            <Dependent Role="vial_ordencomprapresentada">
+              <PropertyRef Name="idordendecompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Afiliados">
+          <End Role="vial_afiliados" Type="Self.vial_afiliados" Multiplicity="1" />
+          <End Role="vial_ordendecompra" Type="Self.vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_afiliados">
+              <PropertyRef Name="idAfiliados" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="Afiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Comercio">
+          <End Role="vial_comercio" Type="Self.vial_comercio" Multiplicity="1" />
+          <End Role="vial_ordendecompra" Type="Self.vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="comercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarioscomercio_comercio">
+          <End Role="vial_comercio" Type="Self.vial_comercio" Multiplicity="1" />
+          <End Role="vial_usuarioscomercio" Type="Self.vial_usuarioscomercio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_usuarioscomercio">
+              <PropertyRef Name="idComercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="vialcatModelStoreContainer">
+          <EntitySet Name="vial_afiliados" EntityType="Self.vial_afiliados" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_comercio" EntityType="Self.vial_comercio" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_estadoafiliacion" EntityType="Self.vial_estadoafiliacion" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_estadoordencompra" EntityType="Self.vial_estadoordencompra" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_ordencomprapresentada" EntityType="Self.vial_ordencomprapresentada" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_ordendecompra" EntityType="Self.vial_ordendecompra" Schema="vialcat" store:Type="Tables" />
+          <EntitySet Name="vial_usuarioscomercio" EntityType="Self.vial_usuarioscomercio" Schema="vialcat" store:Type="Tables" />
+          <AssociationSet Name="FK_comercio" Association="Self.FK_comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_ordencomprapresentada" EntitySet="vial_ordencomprapresentada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estAfiliacion_Afiliado" Association="Self.FK_estAfiliacion_Afiliado">
+            <End Role="vial_estadoafiliacion" EntitySet="vial_estadoafiliacion" />
+            <End Role="vial_afiliados" EntitySet="vial_afiliados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orden_EstadoOrden" Association="Self.FK_Orden_EstadoOrden">
+            <End Role="vial_estadoordencompra" EntitySet="vial_estadoordencompra" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordenCompra" Association="Self.FK_ordenCompra">
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+            <End Role="vial_ordencomprapresentada" EntitySet="vial_ordencomprapresentada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Afiliados" Association="Self.FK_OrdenCompra_Afiliados">
+            <End Role="vial_afiliados" EntitySet="vial_afiliados" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Comercio" Association="Self.FK_OrdenCompra_Comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarioscomercio_comercio" Association="Self.FK_usuarioscomercio_comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_usuarioscomercio" EntitySet="vial_usuarioscomercio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="vialcatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="vialcatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vial_afiliados" EntityType="vialcatModel.vial_afiliados" />
+          <EntitySet Name="vial_estadoafiliacion" EntityType="vialcatModel.vial_estadoafiliacion" />
+          <AssociationSet Name="FK_estAfiliacion_Afiliado" Association="vialcatModel.FK_estAfiliacion_Afiliado">
+            <End Role="vial_estadoafiliacion" EntitySet="vial_estadoafiliacion" />
+            <End Role="vial_afiliados" EntitySet="vial_afiliados" />
+          </AssociationSet>
+          <EntitySet Name="vial_usuarioscomercio" EntityType="vialcatModel.vial_usuarioscomercio" />
+          <EntitySet Name="vial_comercio" EntityType="vialcatModel.vial_comercio" />
+          <AssociationSet Name="FK_usuarioscomercio_comercio" Association="vialcatModel.FK_usuarioscomercio_comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_usuarioscomercio" EntitySet="vial_usuarioscomercio" />
+          </AssociationSet>
+          <EntitySet Name="vial_ordencomprapresentada" EntityType="vialcatModel.vial_ordencomprapresentada" />
+          <AssociationSet Name="FK_comercio" Association="vialcatModel.FK_comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_ordencomprapresentada" EntitySet="vial_ordencomprapresentada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_presentada_Usuario" Association="vialcatModel.FK_presentada_Usuario">
+            <End Role="vial_usuarioscomercio" EntitySet="vial_usuarioscomercio" />
+            <End Role="vial_ordencomprapresentada" EntitySet="vial_ordencomprapresentada" />
+          </AssociationSet>
+          <EntitySet Name="vial_estadoordencompra" EntityType="vialcatModel.vial_estadoordencompra" />
+          <EntitySet Name="vial_ordendecompra" EntityType="vialcatModel.vial_ordendecompra" />
+          <AssociationSet Name="FK_OrdenCompra_Afiliados" Association="vialcatModel.FK_OrdenCompra_Afiliados">
+            <End Role="vial_afiliados" EntitySet="vial_afiliados" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Comercio" Association="vialcatModel.FK_OrdenCompra_Comercio">
+            <End Role="vial_comercio" EntitySet="vial_comercio" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orden_EstadoOrden" Association="vialcatModel.FK_Orden_EstadoOrden">
+            <End Role="vial_estadoordencompra" EntitySet="vial_estadoordencompra" />
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordenCompra" Association="vialcatModel.FK_ordenCompra">
+            <End Role="vial_ordendecompra" EntitySet="vial_ordendecompra" />
+            <End Role="vial_ordencomprapresentada" EntitySet="vial_ordencomprapresentada" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="vial_afiliados">
+          <Key>
+            <PropertyRef Name="idAfiliados" />
+          </Key>
+          <Property Name="idAfiliados" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="Int32" Nullable="false" />
+          <Property Name="domicilio" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="estado_afiliacion" Type="Int32" />
+          <NavigationProperty Name="vial_estadoafiliacion" Relationship="vialcatModel.FK_estAfiliacion_Afiliado" FromRole="vial_afiliados" ToRole="vial_estadoafiliacion" />
+          <NavigationProperty Name="vial_ordendecompra" Relationship="vialcatModel.FK_OrdenCompra_Afiliados" FromRole="vial_afiliados" ToRole="vial_ordendecompra" />
+        </EntityType>
+        <EntityType Name="vial_estadoafiliacion">
+          <Key>
+            <PropertyRef Name="idestadoafiliacion" />
+          </Key>
+          <Property Name="idestadoafiliacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estadoafiliacion" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vial_afiliados" Relationship="vialcatModel.FK_estAfiliacion_Afiliado" FromRole="vial_estadoafiliacion" ToRole="vial_afiliados" />
+        </EntityType>
+        <Association Name="FK_estAfiliacion_Afiliado">
+          <End Type="vialcatModel.vial_estadoafiliacion" Role="vial_estadoafiliacion" Multiplicity="0..1" />
+          <End Type="vialcatModel.vial_afiliados" Role="vial_afiliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_estadoafiliacion">
+              <PropertyRef Name="idestadoafiliacion" />
+            </Principal>
+            <Dependent Role="vial_afiliados">
+              <PropertyRef Name="estado_afiliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vial_usuarioscomercio">
+          <Key>
+            <PropertyRef Name="idUsuariosComercio" />
+          </Key>
+          <Property Name="idUsuariosComercio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idComercio" Type="Int32" Nullable="false" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="contrasenial" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vial_comercio" Relationship="vialcatModel.FK_usuarioscomercio_comercio" FromRole="vial_usuarioscomercio" ToRole="vial_comercio" />
+          <NavigationProperty Name="vial_ordencomprapresentada" Relationship="vialcatModel.FK_presentada_Usuario" FromRole="vial_usuarioscomercio" ToRole="vial_ordencomprapresentada" />
+        </EntityType>
+        <EntityType Name="vial_comercio">
+          <Key>
+            <PropertyRef Name="id_comercio" />
+          </Key>
+          <Property Name="id_comercio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="razonsocial" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="domicilio" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuit" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vial_usuarioscomercio" Relationship="vialcatModel.FK_usuarioscomercio_comercio" FromRole="vial_comercio" ToRole="vial_usuarioscomercio" />
+          <NavigationProperty Name="vial_ordencomprapresentada" Relationship="vialcatModel.FK_comercio" FromRole="vial_comercio" ToRole="vial_ordencomprapresentada" />
+          <NavigationProperty Name="vial_ordendecompra" Relationship="vialcatModel.FK_OrdenCompra_Comercio" FromRole="vial_comercio" ToRole="vial_ordendecompra" />
+        </EntityType>
+        <Association Name="FK_usuarioscomercio_comercio">
+          <End Type="vialcatModel.vial_comercio" Role="vial_comercio" Multiplicity="1" />
+          <End Type="vialcatModel.vial_usuarioscomercio" Role="vial_usuarioscomercio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_usuarioscomercio">
+              <PropertyRef Name="idComercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vial_ordencomprapresentada">
+          <Key>
+            <PropertyRef Name="idordencomprapresentada" />
+          </Key>
+          <Property Name="idordencomprapresentada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idcomercio" Type="Int32" Nullable="false" />
+          <Property Name="idordendecompra" Type="Int32" Nullable="false" />
+          <Property Name="fechapresentacion" Type="DateTime" Nullable="false" />
+          <Property Name="usuario" Type="Int32" />
+          <Property Name="ip" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vial_comercio" Relationship="vialcatModel.FK_comercio" FromRole="vial_ordencomprapresentada" ToRole="vial_comercio" />
+          <NavigationProperty Name="vial_usuarioscomercio" Relationship="vialcatModel.FK_presentada_Usuario" FromRole="vial_ordencomprapresentada" ToRole="vial_usuarioscomercio" />
+          <NavigationProperty Name="vial_ordendecompra" Relationship="vialcatModel.FK_ordenCompra" FromRole="vial_ordencomprapresentada" ToRole="vial_ordendecompra" />
+        </EntityType>
+        <Association Name="FK_comercio">
+          <End Type="vialcatModel.vial_comercio" Role="vial_comercio" Multiplicity="1" />
+          <End Type="vialcatModel.vial_ordencomprapresentada" Role="vial_ordencomprapresentada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_ordencomprapresentada">
+              <PropertyRef Name="idcomercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_presentada_Usuario">
+          <End Type="vialcatModel.vial_usuarioscomercio" Role="vial_usuarioscomercio" Multiplicity="0..1" />
+          <End Type="vialcatModel.vial_ordencomprapresentada" Role="vial_ordencomprapresentada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_usuarioscomercio">
+              <PropertyRef Name="idUsuariosComercio" />
+            </Principal>
+            <Dependent Role="vial_ordencomprapresentada">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vial_estadoordencompra">
+          <Key>
+            <PropertyRef Name="idestadoordencompra" />
+          </Key>
+          <Property Name="idestadoordencompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estadoordencompra" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vial_ordendecompra" Relationship="vialcatModel.FK_Orden_EstadoOrden" FromRole="vial_estadoordencompra" ToRole="vial_ordendecompra" />
+        </EntityType>
+        <EntityType Name="vial_ordendecompra">
+          <Key>
+            <PropertyRef Name="idOrdenDeCompra" />
+          </Key>
+          <Property Name="idOrdenDeCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Afiliado" Type="Int32" Nullable="false" />
+          <Property Name="importe" Type="Double" Nullable="false" />
+          <Property Name="comercio" Type="Int32" Nullable="false" />
+          <Property Name="fecha_emision" Type="DateTime" />
+          <Property Name="fecha_vencimiento" Type="DateTime" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="vial_afiliados" Relationship="vialcatModel.FK_OrdenCompra_Afiliados" FromRole="vial_ordendecompra" ToRole="vial_afiliados" />
+          <NavigationProperty Name="vial_comercio" Relationship="vialcatModel.FK_OrdenCompra_Comercio" FromRole="vial_ordendecompra" ToRole="vial_comercio" />
+          <NavigationProperty Name="vial_estadoordencompra" Relationship="vialcatModel.FK_Orden_EstadoOrden" FromRole="vial_ordendecompra" ToRole="vial_estadoordencompra" />
+          <NavigationProperty Name="vial_ordencomprapresentada" Relationship="vialcatModel.FK_ordenCompra" FromRole="vial_ordendecompra" ToRole="vial_ordencomprapresentada" />
+        </EntityType>
+        <Association Name="FK_OrdenCompra_Afiliados">
+          <End Type="vialcatModel.vial_afiliados" Role="vial_afiliados" Multiplicity="1" />
+          <End Type="vialcatModel.vial_ordendecompra" Role="vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_afiliados">
+              <PropertyRef Name="idAfiliados" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="Afiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Comercio">
+          <End Type="vialcatModel.vial_comercio" Role="vial_comercio" Multiplicity="1" />
+          <End Type="vialcatModel.vial_ordendecompra" Role="vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_comercio">
+              <PropertyRef Name="id_comercio" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="comercio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orden_EstadoOrden">
+          <End Type="vialcatModel.vial_estadoordencompra" Role="vial_estadoordencompra" Multiplicity="1" />
+          <End Type="vialcatModel.vial_ordendecompra" Role="vial_ordendecompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_estadoordencompra">
+              <PropertyRef Name="idestadoordencompra" />
+            </Principal>
+            <Dependent Role="vial_ordendecompra">
+              <PropertyRef Name="estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordenCompra">
+          <End Type="vialcatModel.vial_ordendecompra" Role="vial_ordendecompra" Multiplicity="1" />
+          <End Type="vialcatModel.vial_ordencomprapresentada" Role="vial_ordencomprapresentada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vial_ordendecompra">
+              <PropertyRef Name="idOrdenDeCompra" />
+            </Principal>
+            <Dependent Role="vial_ordencomprapresentada">
+              <PropertyRef Name="idordendecompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="vialcatModelStoreContainer" CdmEntityContainer="vialcatEntities">
+          <EntitySetMapping Name="vial_afiliados">
+            <EntityTypeMapping TypeName="vialcatModel.vial_afiliados">
+              <MappingFragment StoreEntitySet="vial_afiliados">
+                <ScalarProperty Name="estado_afiliacion" ColumnName="estado_afiliacion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="idAfiliados" ColumnName="idAfiliados" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_estadoafiliacion">
+            <EntityTypeMapping TypeName="vialcatModel.vial_estadoafiliacion">
+              <MappingFragment StoreEntitySet="vial_estadoafiliacion">
+                <ScalarProperty Name="estadoafiliacion" ColumnName="estadoafiliacion" />
+                <ScalarProperty Name="idestadoafiliacion" ColumnName="idestadoafiliacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_usuarioscomercio">
+            <EntityTypeMapping TypeName="vialcatModel.vial_usuarioscomercio">
+              <MappingFragment StoreEntitySet="vial_usuarioscomercio">
+                <ScalarProperty Name="contrasenial" ColumnName="contrasenial" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="idComercio" ColumnName="idComercio" />
+                <ScalarProperty Name="idUsuariosComercio" ColumnName="idUsuariosComercio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_comercio">
+            <EntityTypeMapping TypeName="vialcatModel.vial_comercio">
+              <MappingFragment StoreEntitySet="vial_comercio">
+                <ScalarProperty Name="cuit" ColumnName="cuit" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+                <ScalarProperty Name="razonsocial" ColumnName="razonsocial" />
+                <ScalarProperty Name="id_comercio" ColumnName="id_comercio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_ordencomprapresentada">
+            <EntityTypeMapping TypeName="vialcatModel.vial_ordencomprapresentada">
+              <MappingFragment StoreEntitySet="vial_ordencomprapresentada">
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fechapresentacion" ColumnName="fechapresentacion" />
+                <ScalarProperty Name="idordendecompra" ColumnName="idordendecompra" />
+                <ScalarProperty Name="idcomercio" ColumnName="idcomercio" />
+                <ScalarProperty Name="idordencomprapresentada" ColumnName="idordencomprapresentada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_estadoordencompra">
+            <EntityTypeMapping TypeName="vialcatModel.vial_estadoordencompra">
+              <MappingFragment StoreEntitySet="vial_estadoordencompra">
+                <ScalarProperty Name="estadoordencompra" ColumnName="estadoordencompra" />
+                <ScalarProperty Name="idestadoordencompra" ColumnName="idestadoordencompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vial_ordendecompra">
+            <EntityTypeMapping TypeName="vialcatModel.vial_ordendecompra">
+              <MappingFragment StoreEntitySet="vial_ordendecompra">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+                <ScalarProperty Name="comercio" ColumnName="comercio" />
+                <ScalarProperty Name="importe" ColumnName="importe" />
+                <ScalarProperty Name="Afiliado" ColumnName="Afiliado" />
+                <ScalarProperty Name="idOrdenDeCompra" ColumnName="idOrdenDeCompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

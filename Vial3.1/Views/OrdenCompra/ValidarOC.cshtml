@@ -1,0 +1,36 @@
+﻿@model Vial3._1.Models.ViewModels.OrdenDeCompraVM
+@{
+    /**/
+
+    ViewBag.Title = "ValidarOC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ValidarOC</h2>
+
+@using (Html.BeginForm("validarOc", "ordencompra", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>INGRESE EL CODIGO DE BARRA DE LA ORDEN DE COMPRA</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdOrdenDeCompra, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.IdOrdenDeCompra, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IdOrdenDeCompra, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-6">
+            <input type="submit" value="Validar" class="btn btn-primary btn-block" />
+        </div>
+    </div>
+
+   
+
+}

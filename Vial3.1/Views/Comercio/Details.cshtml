@@ -1,0 +1,53 @@
+﻿@model Vial3._1.Models.vial_comercio
+
+@{
+    ViewBag.Title = "Comercios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.razonsocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.razonsocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.domicilio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.domicilio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuit)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <h2>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id_comercio }) |
+        @Html.ActionLink("Atras", "Index")
+    </h2>
+</p>

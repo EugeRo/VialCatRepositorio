@@ -1,0 +1,99 @@
+﻿@model Vial3._1.Models.ViewModels.OrdenDeCompraVM
+
+@{
+                /**/
+
+                ViewBag.Title = "Confirmar Orden de Compra";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2> @ViewBag.Title</h2>
+
+@using (Html.BeginForm("ConfirmarOc", "ordencompra", FormMethod.Post))
+{
+    string fechaEmisionEditada = Model.FechaEmision.ToShortDateString();
+    string fechaVencimientoEditada = Model.FechaVencimiento.ToShortDateString();
+
+    switch (Model.EstadoOC)
+    {
+        case 1:
+            
+          <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(d => d.IdOrdenDeCompra)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => d.IdOrdenDeCompra)
+                @Html.HiddenFor(d => d.IdOrdenDeCompra)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(d => d.DatosAfiliado)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => d.DatosAfiliado)
+                @Html.HiddenFor(d => d.DatosAfiliado)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(d => d.EstadoDescripcion)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => d.EstadoDescripcion)
+                @Html.HiddenFor(d => d.EstadoDescripcion)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(d => d.RazonSocial)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => d.RazonSocial)
+                @Html.HiddenFor(d => d.Comercio)
+            </dd>
+
+            @**********************************************@
+            <dt>
+                @Html.DisplayNameFor(d => d.FechaEmision)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d=>fechaEmisionEditada)
+                @Html.HiddenFor(d => d.FechaEmision)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(d => d.FechaVencimiento)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => fechaVencimientoEditada)
+                @Html.HiddenFor(d => d.FechaVencimiento)
+            </dd>
+            @**********************************************@
+
+            <dt>
+                @Html.DisplayNameFor(d => d.RazonSocial)
+            </dt>
+            <dd>
+                @Html.DisplayFor(d => d.RazonSocial)
+                @Html.HiddenFor(d => d.RazonSocial)
+            </dd>
+        </dl>
+                <div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6">
+                            <input type="submit" value="Confirmar" class="btn btn-primary btn-block" />
+                        </div>
+                    </div>
+                </div>
+
+                //********************
+                break;
+            case 2:
+                <p>LA ORDEN YA FUE PRESENTADA</p>
+                <h2>@Html.ActionLink("VOLVER", "ValidarOc")</h2>
+                break;
+            case 9:
+                <p>NO SE ENCUENTRA LA ORDEN CON EL CODIGO INGRESADO</p>
+                <h2>@Html.ActionLink("VOLVER", "ValidarOc")</h2>
+                break;
+        }
+
+
+
+    }

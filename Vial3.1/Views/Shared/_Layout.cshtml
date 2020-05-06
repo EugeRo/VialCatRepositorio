@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+   
+</head>
+<body>
+
+    <header>
+        <div id="top">
+            <span>SINDICATO DE TRABAJADORES VIALES DE CATAMARCA</span>
+        </div>
+
+        <div id="cabecera">
+            <div class="logo">
+                <img src="~/Content/imagenes/Nuelog.png">
+            </div>
+
+            <div class="menu">
+                <nav>
+                    <ul>
+                        <li>@Html.ActionLink("INICIO", "Index", "Home")</li>
+                        <li>@Html.ActionLink("AFILIADOS", "Index", "afiliados")</li>
+                        <li>@Html.ActionLink("ORD. DE COMPRA", "Index", "OrdenCompra")</li>
+                        <li>@Html.ActionLink("COMERCIOS", "Index", "comercio")</li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="menu-derecho">
+                <ul>
+                    <li><a href="#">AFILIADOS</a></li>
+                    <li>@Html.ActionLink("COMERCIO", "validarOC", "OrdenCompra")</li>
+                </ul>
+            </div>
+        </div>
+
+    </header>
+
+
+    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

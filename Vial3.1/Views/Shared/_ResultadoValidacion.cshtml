@@ -1,0 +1,16 @@
+﻿@model List<Vial3._1.Models.ViewModels.OrdenDeCompraVM>
+
+
+
+@foreach (var Oc in (List<Vial3._1.Models.ViewModels.OrdenDeCompraVM>)ViewBag.DatosOrden)
+{
+    <div> <h4><span>La Orden de compra N°: @Oc.IdOrdenDeCompra</span></h4></div>
+    <div> <h4><span>Correspondiente al Afiliado:@Oc.Afiliados_lst.apellido , @Oc.Afiliados_lst.nombre </span></h4></div>
+    <div> <h4><span>Numero de Documento: @Oc.Afiliados_lst.documento</span></h4></div>
+    <div> <h4><span>Con Fecha Emision: @Oc.FechaEmision</span></h4></div>
+    <div> <h4><span>y Vencimiento: @Oc.FechaVencimiento</span></h4></div>
+    <div> <h4><span>Se encuentra: AUTORIZADA</span></h4></div>
+
+
+
+}

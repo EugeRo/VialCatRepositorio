@@ -1,0 +1,73 @@
+﻿@model  Vial3._1.Models.ViewModels.OrdenDeCompraVM
+
+@{
+        List<SelectListItem> items = (List<SelectListItem>)ViewBag.afiliados;
+        List<SelectListItem> itemsC = (List<SelectListItem>)ViewBag.itemsComercio;
+    ViewBag.Title = "Nueva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (@Html.BeginForm("AgregarOC", "OrdenCompra", FormMethod.Post))
+{
+<div class="form-horizontal">
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.Afiliado, "Afiliado", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+
+            @Html.DropDownList("idAfiliado", items, "Seleccione el Afiliado", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.Afiliado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(d => d.Comercio, "Comercio", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.DropDownList("Comercio", itemsC, "Seleccione el Comercio", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.Comercio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+   
+    <div class="form-group">
+        @Html.LabelFor(d => d.FechaEmision, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(d => d.FechaEmision, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(d => d.FechaEmision, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.FechaVencimiento, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(d => d.FechaVencimiento, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(d => d.FechaVencimiento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.Importe, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(d => d.Importe, new { htmlAttributes = new { @class = "form-control" } })<br />
+            @Html.ValidationMessageFor(d => d.Importe, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-6">
+            <input type="submit" value="Agregar" class="btn btn-primary btn-block" />
+        </div>
+    </div>
+
+</div>
+
+}

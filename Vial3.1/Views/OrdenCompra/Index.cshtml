@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<Vial3._1.Models.ViewModels.OrdenDeCompraVM>
+@{
+        ViewBag.Title = "Ordenes de Compra";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    
+ }
+
+<h2>@ViewBag.Title</h2>
+
+<h2>@Html.ActionLink("Nueva", "AgregarOC")</h2>
+
+@using (Html.BeginForm())
+{
+    <hr />
+    <div>
+        N° de Orden de Compra @Html.TextBox("searchString")
+        <input type="submit" value="Buscar" />
+    </div>
+
+}
+</br>
+<table class="table">
+    <tr>
+        <th>
+            Afiliado
+        </th>
+        <th>
+            Documento
+        </th>
+        <th>
+            Importe
+        </th>
+        <th>
+            Emision
+        </th>
+        <th>
+            Vencimiento
+        </th>
+        <th>
+            Comercio
+        </th>
+        <th>
+            IdComercio
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var nombrecompleto = item.Afiliados_lst.apellido.ToUpper() + "," + item.Afiliados_lst.nombre.ToUpper();
+        string fechaEmisionEditada = item.FechaEmision.ToShortDateString();
+        string fechaVencimientoEditada = item.FechaVencimiento.ToShortDateString();
+
+    <tr>
+        <td>
+            @Html.DisplayFor(d => nombrecompleto)
+
+        </td>
+        <td>
+            @Html.DisplayFor(d => item.Afiliados_lst.documento)
+        </td>
+        <td>
+            @Html.DisplayFor(d => item.Importe)
+        </td>
+        <td>
+            @Html.DisplayFor(d => fechaEmisionEditada)
+        </td>
+        <td>
+            @Html.DisplayFor(d => fechaVencimientoEditada)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Comercio_lst.razonsocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comercio)
+        </td>
+        <td>
+            @Html.ActionLink("MODIFICAR", "ModificarOc", new { id = item.IdOrdenDeCompra, idcomercio = item.Comercio }) |
+            @Html.ActionLink("VER", "VerOc", new { id = item.IdOrdenDeCompra }) |
+            @Html.ActionLink("ANULAR", "Eliminar", new { id = item.IdOrdenDeCompra })
+        </td>
+    </tr>
+    }
+
+</table>

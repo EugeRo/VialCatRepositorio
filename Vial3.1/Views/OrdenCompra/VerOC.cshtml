@@ -1,0 +1,74 @@
+﻿@model Vial3._1.Models.ViewModels.OrdenDeCompraVM
+@{
+    ViewBag.Title = "Datos Orden de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (@Html.BeginForm("ImprimirOC", "OrdenCompra", FormMethod.Post))
+{
+<div class="container" style="border:2px solid">
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Orden de Compra#")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(d => d.IdOrdenDeCompra)
+        </dd>
+       
+        <dt>
+            @Html.DisplayNameFor(d => d.DatosAfiliado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(d => d.DatosAfiliado)
+
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(d => d.FechaEmision)
+        </dt>
+
+        <dd>
+            @Html.ValueFor(d => d.FechaEmision, "{0:dd/MM/yyyy}")
+        </dd>
+       
+        <dt>
+            @Html.DisplayNameFor(d => d.FechaVencimiento)
+        </dt>
+
+        <dd>
+            @Html.ValueFor(d => d.FechaVencimiento, "{0:dd/MM/yyyy}")
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(d => d.Importe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(d => d.Importe)
+        </dd>
+      
+        <dt>
+            @Html.Label("Codigo")
+        </dt>
+       
+        <dd>
+            <img src="@ViewBag.Codigo" width="200" height="80" alt="" />
+        </dd>
+    
+    </dl>
+
+
+    <div class="form-group">
+        <h2>@Html.ActionLink("Imprimir", "ImprimirOc", new { id = Model.IdOrdenDeCompra })</h2>
+    </div>
+
+
+
+</div>
+}

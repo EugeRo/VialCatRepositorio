@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Vial3._1.Models.vial_comercio>
+
+@{
+    ViewBag.Title = "Comercios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <h2>@Html.ActionLink("NUEVO", "Create")</h2>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.razonsocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.domicilio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cuit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.razonsocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.domicilio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cuit)
+        </td>
+        <td>
+            @Html.ActionLink("MODIFICAR", "Edit", new { id=item.id_comercio }) |
+            @Html.ActionLink("VER", "Details", new { id=item.id_comercio }) |
+            @Html.ActionLink("ELIMINAR", "Delete", new { id=item.id_comercio })
+        </td>
+    </tr>
+}
+
+</table>
